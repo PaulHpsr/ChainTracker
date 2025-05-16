@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <title>ChainTracker - Transactions Informations</title>
+  <link rel="icon" href="{% static 'favicon.png' %}" type="image/png" />
+</head>
+
+
+<body>
+
+  <link rel="stylesheet" href="{% static 'gradient.png' %}">
+  <div class="layer-blur"></div>
+
+  <div class="container">
+    <header>
+      <h1 class="logo">ChainTracker</h1>
+
+      <nav>
+        <a href="{% url 'home' %}">HOME</a>
+        <a href="/transactions/">TRANSACTIONS</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'portfolio_dashboard' %}">PORTFOLIO</a></li>
+        {% else %}
+        <a href="{% url 'login' %}">PORTFOLIO</a></li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <h2 class="name">{{ user.username }}</h1>
+          <a>
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn-signing">Déconnexion</button>
+            </form>
+          </a>
+          {% else %}
+          <form action="{% url 'login' %}" method="get">
+            <button type="submit" class="btn-signing">SIGNING</button>
+          </form>
+          {% endif %}
+      </nav>
+    </header>
+
+
+
+    <main>
+      <div class="content">
+
+        <h1>Transactions - {{ selected_chain|upper }} Tracker</h1>
+
+        <!-- Ligne de boutons pour choisir la blockchain -->
+        <div class="crypto-btn">
+          <!-- Chaque lien renvoie sur la même page avec le paramètre 'chain' -->
+          <a href="?chain=ethereum" class="blockchain-btn {% if selected_chain == 'ethereum' %}active{% endif %}">
+
+            Ethereum
+          </a>
+          <a href="?chain=bnb" class="blockchain-btn {% if selected_chain == 'bnb' %}active{% endif %}">
+
+
+
+            BNB
+          </a>
+          <a href="?chain=bitcoin" class="blockchain-btn {% if selected_chain == 'bitcoin' %}active{% endif %}">
+
+
+
+            Bitcoin
+          </a>
+          <a href="?chain=polygon" class="blockchain-btn {% if selected_chain == 'polygon' %}active{% endif %}">
+
+
+
+            Polygon
+          </a>
+        </div>
+
+        <div class="stats-row">
+          {% if selected_chain == "ethereum" or selected_chain == "bnb" or selected_chain == "polygon" %}
+          <div class="stat-item-container">
+            <table class="stat-item">
+              <thead>
+                <tr>
+                  <th>Hash</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Valeur</th>
+                  <th>Frais</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for tx in transactions %}
+                <tr>
+                  <td>{{ tx.hash }}</td>
+                  <td>{{ tx.from }}</td>
+                  <td>{{ tx.to }}</td>
+                  <td>{{ tx.value }}</td>
+                  <td>{{ tx.gas }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5">Aucune transaction trouvée</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% elif selected_chain == "bitcoin" %}
+          <div class="stat-item-container">
+            <table class="stat-item">
+              <thead>
+                <tr>
+                  <th>Hash</th>
+                  <th>Inputs</th>
+                  <th>Outputs</th>
+                  <th>Confirmations</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for tx in transactions %}
+                <tr>
+                  <td>{{ tx.hash }}</td>
+                  <td>
+                    {% if tx.inputs %}
+                    {% for inp in tx.inputs %}
+                    {% if inp.txid %}
+                    {{ inp.txid }} (vout: {{ inp.vout }})<br>
+                    {% else %}
+                    {{ inp }}<br>
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if tx.outputs %}
+                    {% for output in tx.outputs %}
+                    {% if output.address %}
+                    {{ output.address }} : {{ output.value }} BTC<br>
+                    {% elif output.scriptPubKey %}
+                    {% for addr in output.scriptPubKey.addresses %}
+                    {{ addr }} : {{ output.value }} BTC<br>
+                    {% endfor %}
+                    {% else %}
+                    {{ output }}<br>
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                  </td>
+                  <td>{{ tx.confirmations }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="4">Aucune transaction trouvée</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <p>Chaîne non supportée pour l'affichage.</p>
+          {% endif %}
+
+          <div>
+            <small>Dernière mise à jour : {{ last_updated }}</small>
+          </div>
+
+          {% if selected_chain == 'ethereum' or selected_chain == 'bnb' or selected_chain == 'polygon' %}
+          <div class="text-center mb-3">
+            <button id="toggleChart" class="btn-signing">Afficher les graphiques de dispersion</button>
+
+            <section id="charts-section" style="display:none;">
+              <canvas id="scatterChart"></canvas>
+            </section>
+          </div>
+
+          <script id="transactions-data" type="application/json">
+            {{ transactions_json|safe }}
+          </script>
+          {% endif %}
+
+
+        </div>
+
+
+    </main>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      let chartInstance = null;
+
+      document.getElementById("toggleChart").addEventListener("click", function () {
+        const chartsSection = document.getElementById("charts-section");
+        if (chartsSection.style.display === "none" || chartsSection.style.display === "") {
+          chartsSection.style.display = "block";
+          this.textContent = "Masquer les graphiques";
+          renderChart();
+        } else {
+          chartsSection.style.display = "none";
+          this.textContent = "Afficher les graphiques de dispersion";
+          if (chartInstance) {
+            chartInstance.destroy();
+            chartInstance = null;
+          }
+        }
+      });
+
+      // Plugin pour arrondir les barres (Chart.js 3+)
+      const roundBarPlugin = {
+        id: 'roundBarPlugin',
+        afterDatasetsDraw(chart, args, options) {
+          const { ctx, chartArea: { top, bottom, left, right }, scales: { x, y } } = chart;
+          ctx.save();
+          chart.getDatasetMeta(0).data.forEach(bar => {
+            const radius = options.radius || 10;
+            const { x: barX, y: barY, base } = bar;
+            const barWidth = bar.width;
+            const barHeight = base - barY;
+
+            ctx.beginPath();
+            ctx.fillStyle = bar.options.backgroundColor;
+            // Arrondir coins en haut de la barre
+            ctx.moveTo(barX - barWidth / 2, base);
+            ctx.lineTo(barX - barWidth / 2, barY + radius);
+            ctx.quadraticCurveTo(barX - barWidth / 2, barY, barX - barWidth / 2 + radius, barY);
+            ctx.lineTo(barX + barWidth / 2 - radius, barY);
+            ctx.quadraticCurveTo(barX + barWidth / 2, barY, barX + barWidth / 2, barY + radius);
+            ctx.lineTo(barX + barWidth / 2, base);
+            ctx.closePath();
+            ctx.fill();
+          });
+          ctx.restore();
+        }
+      };
+
+      function renderChart() {
+        const transactionsData = JSON.parse(document.getElementById('transactions-data').textContent);
+        const values = transactionsData
+          .map(tx => tx.value)
+          .filter(v => typeof v === 'number' && !isNaN(v));
+
+        if (values.length === 0) {
+          console.warn("Aucune valeur valide pour le graphique.");
+          return;
+        }
+
+        const minValue = Math.min(...values);
+        const maxValue = Math.max(...values);
+        const numBuckets = 10;
+        const bucketSize = (maxValue - minValue) / numBuckets;
+        let buckets = new Array(numBuckets).fill(0);
+
+        values.forEach(val => {
+          let index = Math.floor((val - minValue) / bucketSize);
+          if (index === numBuckets) index = numBuckets - 1;
+          buckets[index]++;
+        });
+
+        let labels = [];
+        for (let i = 0; i < numBuckets; i++) {
+          const start = (minValue + i * bucketSize).toFixed(2);
+          const end = (minValue + (i + 1) * bucketSize).toFixed(2);
+          labels.push(`${start} - ${end}`);
+        }
+
+        const ctx = document.getElementById('scatterChart').getContext('2d');
+
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+
+        chartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Nombre de transactions par tranche de valeur',
+              data: buckets,
+              backgroundColor: 'rgba(54, 162, 235, 0.8)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1,
+              hoverBackgroundColor: 'rgba(54, 162, 235, 1)'
+            }]
+          },
+          options: {
+            responsive: false,
+            animation: {
+              duration: 1000,
+              easing: 'easeOutQuart',
+              animateScale: true,
+              animateRotate: false
+            },
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Valeur',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  }
+                },
+                grid: {
+                  display: false
+                }
+              },
+              y: {
+                beginAtZero: true,
+                stepSize: 1,
+                title: {
+                  display: true,
+                  text: 'Nombre de transactions',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  }
+                },
+                ticks: {
+                  precision: 0
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  font: {
+                    size: 16,
+                    weight: 'bold'
+                  }
+                }
+              },
+              tooltip: {
+                enabled: true,
+                mode: 'nearest',
+                intersect: false
+              }
+            }
+          },
+          plugins: [roundBarPlugin]
+        });
+      }
+
+    </script>
+</body>
+
+</html>

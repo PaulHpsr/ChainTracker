@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="icon" href="{% static 'favicon.png' %}" type="image/png" />
+  <title>ChainTracker - BlockChain Explorer</title>
+</head>
+
+
+<body>
+  <link rel="stylesheet" href="{% static 'gradient.png' %}">
+  <div class="layer-blur"></div>
+
+  <div class="container">
+    <header>
+      <h1 data-aos="fade-down" data-aos-duration:"1500" class="logo">ChainTracker</h1>
+
+      <nav>
+        <a data-aos="fade-down" data-aos-duration:"2000" href="{% url 'home' %}">HOME</a>
+        <a data-aos="fade-down" data-aos-duration:"2500" href="/transactions/">TRANSACTIONS</a>
+        {% if user.is_authenticated %}
+        <a data-aos="fade-down" data-aos-duration:"3000" href="{% url 'portfolio_dashboard' %}">PORTFOLIO</a></li>
+        {% else %}
+        <a data-aos="fade-down" data-aos-duration:"3000" href="{% url 'login' %}">PORTFOLIO</a></li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <h2 data-aos="fade-down" data-aos-duration:"3500" class="name">{{ user.username }}</h1>
+          <a>
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button data-aos="fade-down" data-aos-duration:"3500" type="submit"
+                class="btn-signing">Déconnexion</button>
+            </form>
+          </a>
+          {% else %}
+          <form action="{% url 'login' %}" method="get">
+            <button data-aos="fade-down" data-aos-duration:"3500" type="submit" class="btn-signing">SIGNING</button>
+          </form>
+          {% endif %}
+      </nav>
+    </header>
+
+    <main>
+      <div data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-offset="0"
+        data-aos-duration="1500" class="content">
+        <h1>SOLUTION PERSONNELLE<br> DE SUIVI DES CRYPTOMONNAIES</h1>
+
+        <p class="description">
+          ChainTracker est un projet personnel développé pour démontrer mes compétences techniques dans la création
+          d’applications web et en language Python.
+          <br>Cette plateforme offre une vue synthétique des principales cryptomonnaies, un suivi détaillé des
+          transactions
+          et une gestion simplifiée d’un portefeuille crypto.
+        </p>
+
+        <div class="buttons">
+          <a href="https://github.com/PaulHpsr/ChainTracker" class="btn-get-started">Documentation &gt;</a>
+          <a href="{% url 'login' %}" class="btn-signing-main">Getstarted &gt;</a>
+        </div>
+
+        <h1 class="crypto-title">{{ title }}</h1>
+
+        <!-- Ligne de boutons pour choisir la blockchain -->
+        <div class="crypto-btn">
+          <!-- Chaque lien renvoie sur la même page avec le paramètre 'chain' -->
+          <a href="?chain=ethereum" class="blockchain-btn {% if selected_chain == 'ethereum' %}active{% endif %}">
+
+            Ethereum
+          </a>
+          <a href="?chain=bnb" class="blockchain-btn {% if selected_chain == 'bnb' %}active{% endif %}">
+
+
+
+            BNB
+          </a>
+          <a href="?chain=bitcoin" class="blockchain-btn {% if selected_chain == 'bitcoin' %}active{% endif %}">
+
+
+
+            Bitcoin
+          </a>
+          <a href="?chain=solana" class="blockchain-btn {% if selected_chain == 'solana' %}active{% endif %}">
+
+
+
+            Solana
+          </a>
+          <a href="?chain=polygon" class="blockchain-btn {% if selected_chain == 'polygon' %}active{% endif %}">
+
+
+
+            Polygon
+          </a>
+        </div>
+
+        <!-- Affichage des statistiques -->
+        <div class="stats-row">
+          <div class="stat-item">
+            <h5>Price</h5>
+            <p>{{ stats.price }}</p>
+          </div>
+          <div class="stat-item">
+            <h5>Market Cap</h5>
+            <p>{{ stats.market_cap }}</p>
+          </div>
+          <div class="stat-item">
+            <h5>TPS</h5>
+            <p>{{ stats.tps }}</p>
+          </div>
+          <div class="stat-item">
+            <h5>Gas Price</h5>
+            <p>{{ stats.gas_price }}</p>
+          </div>
+          <div class="stat-item">
+            <h5>Dernier bloc finalisé</h5>
+            <p>{{ stats.last_finalized_block }}</p>
+          </div>
+          <div class="stat-item">
+            <h5>Dernier bloc sécurisé</h5>
+            <p>{{ stats.last_safe_block }}</p>
+          </div>
+        </div>
+
+        {% if error_message %}
+        <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+
+    </main>
+
+    <spline-viewer class="back-3D" url="https://prod.spline.design/ciuj61cUJM8mouBf/scene.splinecode"></spline-viewer>
+  </div>
+  </div>
+
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.95/build/spline-viewer.js"></script>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

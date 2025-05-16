@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>ChainTracker - Portfolio Explorer</title>
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png" />
+</head>
+
+<body>
+
+    <link rel="stylesheet" href="{% static 'gradient.png' %}">
+    <div class="layer-blur"></div>
+    <div class="container">
+        <header>
+            <h1 class="logo">ChainTracker</h1>
+
+            <nav>
+                <a href="{% url 'home' %}">HOME</a>
+                <a href="/transactions/">TRANSACTIONS</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'portfolio_dashboard' %}">PORTFOLIO</a></li>
+                {% else %}
+                <a href="{% url 'login' %}">PORTFOLIO</a></li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <h2 class="name">{{ user.username }}</h1>
+                    <a>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-signing">Déconnexion</button>
+                        </form>
+                    </a>
+                    {% else %}
+                    <form action="{% url 'login' %}" method="get">
+                        <button type="submit" class="btn-signing">SIGNING</button>
+                    </form>
+                    {% endif %}
+            </nav>
+        </header>
+        <main>
+            <div class="content">
+                <h1>Ajouter un portefeuille</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="blockchain-btn">Ajouter</button>
+                    <a href="{% url 'portfolio_dashboard' %}" class="btn btn-secondary">Annuler</a>
+                </form>
+
+            </div>
+        </main>
+        <spline-viewer class="back-3D"
+            url="https://prod.spline.design/ciuj61cUJM8mouBf/scene.splinecode"></spline-viewer>
+    </div>
+
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.95/build/spline-viewer.js"></script>
+</body>
+
+</html>
