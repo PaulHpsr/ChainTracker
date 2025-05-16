@@ -92,7 +92,7 @@ Ouvrez un terminal (ou invite de commande) et tapez :
 ```dotenv
 git clone https://github.com/ton-utilisateur/ChainTracker.git
 cd ChainTracker
-
+```
 (si vous n’avez pas Git, vous pouvez aussi télécharger le ZIP depuis GitHub et l’extraire.)
 [site officiel](https://www.php.net/)
 
@@ -102,17 +102,17 @@ C’est une bonne pratique pour isoler les dépendances du projet :
 
 ```dotenv
 python -m venv venv
-
+```
 Puis activez-le :
 
 Sur Windows :
 ```dotenv
 venv\Scripts\activate
-
+```
 Sur macOS/Linux :
 ```dotenv
 source venv/bin/activate
-
+```
 ### 3. Installer les dépendances
 
 Avec l’environnement virtuel activé, installez les packages nécessaires :
@@ -120,7 +120,7 @@ Avec l’environnement virtuel activé, installez les packages nécessaires :
 ```dotenv
 pip install -r requirements.txt
 
-
+```
 ### 4. **Configurer les variables d’environnement**:
 Copiez le fichier .env.example (ou créez un fichier .env) à la racine du projet et configurez les variables importantes :
 
@@ -129,7 +129,7 @@ DEBUG=True
 SECRET_KEY=ta_clef_secrete
 ALCHEMY_API_ENDPOINTS={"ethereum": "https://eth-mainnet.alchemyapi.io/v2/votre_clef", "bnb": "...", "polygon": "...", "bitcoin": "...", "solana": "..."}
 DATABASE_URL=sqlite:///db.sqlite3
-
+```
 Note :
 Remplacez votre_clef_secrete par une vraie clé secrète Django .
 Remplissez les URLs d’Alchemy avec vos propres endpoints.
@@ -139,12 +139,12 @@ Exécutez les commandes suivantes pour créer la base et appliquer les migration
 
 ```dotenv
 python manage.py migrate
-
+```
 ### 6. **Lancer le serveur de développement**:
 
 ```dotenv
 python manage.py runserver
-
+```
 Puis ouvrez votre navigateur à l’adresse : [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## Contact
