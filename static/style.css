@@ -1,0 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono&family=Oxanium&family=Share+Tech&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: rgb(0, 0, 0);
+    color: #e7e7e7;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* Gradient */
+.image-gradient {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.5;
+    z-index: -1;
+
+}
+
+.layer-blur{
+    height: 0;
+    width: 30rem;
+    position: absolute;
+    top: 20%;
+    right: 0;
+    box-shadow: 0 0 700px 15px white;
+    rotate: -30deg;
+    z-index: -1;
+}
+
+/* CONTAINER */
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* HEADER */
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5rem;
+}
+
+header h1{
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 300;
+}
+
+header h2{
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    transition: color 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-left: -5%;
+}
+
+nav a{
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    transition: color 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    z-index: 999;
+}
+
+nav a:hover{
+    color: #a7a7a7;
+}
+
+.btn-signing{
+    background-color: #a7a7a7;
+    color:black;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    cursor:pointer;
+}
+
+.btn-signing:hover{
+    background-color: white;
+
+}
+
+
+/* MAIN */
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(90vh - 10px);
+}
+
+.content{
+    max-width: 500rem;
+    margin-left: 10%;
+    z-index: 999;
+}
+
+.content h1 {
+    font-size: 4rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin: 2rem 0;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(128,128,128,0.418);
+}
+
+.description{
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    max-width: 500rem;
+    color:grey;
+}
+
+.buttons{
+    margin-top: 3rem;
+    display: flex;
+    gap: 1rem;
+
+}
+
+.btn-get-started{
+    text-decoration: none;
+    color: #4f0054;
+    border: 1px solid #2a2a2a;
+    padding: 0.7rem 1.2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transition: background-color 0.2s ease;
+}
+
+.btn-get-started:hover{
+    background-color: #1a1a1a;
+}
+
+.btn-signing-main{
+    text-decoration: none;
+    background-color: lightgray;
+    color:black;
+    padding: 0.6rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transition: background-color 0.2s ease;
+}
+
+.btn-signing-main:hover{
+    background-color: gray;
+}
+
+.back-3D{
+    position: absolute;
+    top: 0;
+    margin-top: 10rem;
+}
+
+/* HOME.HTML CRYPTO */
+
+/* Boutons blockchain */
+.crypto-btn {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .blockchain-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1.2rem;
+    border: 2px solid #ffffff;
+    border-radius: 30px;
+    color: #fafafa;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: 'Fira Mono';
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+  
+  .blockchain-btn:hover {
+    background-color: #ffcb20;
+    color: #0a0a1a;
+    box-shadow: 0 0 10px #ffcb20, 0 0 20px #ffcb20;
+  }
+  
+  .blockchain-btn.active {
+    background-color: #ffcb20;
+    box-shadow: 0 0 15px #ffcb20, 0 0 30px #ffcb20;
+    color: #0a0a1a;
+  }
+  
+  
+  /* Stats */
+  .stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .stat-item {
+    background-color: #121229;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    flex: 1 1 150px;
+    box-shadow: 0 0 10px #00202050;
+    font-family: 'Fira Mono', monospace;
+    display: block; /* pour activer le scroll horizontal */
+    white-space: nowrap; /* empêche le retour à la ligne dans les cellules */
+    table-layout: fixed; /* limite la largeur des colonnes */
+    border-collapse: collapse;
+    max-width: 90rem;
+  }
+  
+  .stat-item h5 {
+    font-family: 'Fira Mono', monospace;
+    color: #ebf7f7;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 6px #a9acac;
+  }
+  
+  .stat-item p {
+    font-size: 1.2rem;
+    color: #e0e0f8;
+    user-select: text;
+  }
+  
+  /* Responsive simple */
+  @media (max-width: 600px) {
+    .crypto-btn {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stats-row {
+      flex-direction: column;
+    }
+  }
+
+  /* TRANSACTIONS */
+
+  /* Limiter la largeur des colonnes 'Hash', 'From', 'To' */
+.stat-item th, .stat-item td {
+    padding: 0.5rem 1rem;
+    border: 1px solid #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Colonnes avec largeur fixe - tu peux ajuster */
+  .stat-item th:nth-child(1), .stat-item td:nth-child(1), /* Hash */
+  .stat-item th:nth-child(2), .stat-item td:nth-child(2), /* From */
+  .stat-item th:nth-child(3), .stat-item td:nth-child(3)  /* To */
+  {
+    max-width: 20rem; /* largeur max pour ces colonnes */
+  }
+  
+  /* Colonnes valeurs plus courtes */
+  .stat-item th:nth-child(4), .stat-item td:nth-child(4), /* Valeur */
+  .stat-item th:nth-child(5), .stat-item td:nth-child(5)  /* Frais */
+  {
+    max-width: 30rem;
+    text-align: right;
+  }
+  
+  /* Pour permettre le scroll horizontal sur petits écrans */
+  .stat-item-container {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+
+  /* GRAPHS */
+
+  #scatterChart {
+    max-width: 800px;  
+    height: 450px;     
+    margin: 20px auto;
+    display: block;
+    margin-top: 5rem;
+  }
+
+  #charts-section {
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  #portfolioChart {
+    max-width: 50rem;
+    height: 50rem;
+    display: block;
+    background: rgba(128, 128, 128, 0.15); 
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+
+
+
+
+  /* TABLET RESPONSIVE */
+  @media (max-width: 1300px){
+    header{
+        padding: 1rem 0.5;
+    }
+
+    .content{
+        margin-top: 85%;
+    }
+
+    .back-3D{
+        scale: 0.8;
+        top: -20%;
+    }
+  }
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 768px){
+    header{
+        padding: 1rem 0.1rem;
+    }
+
+    nav{
+        display: none;
+    }
+
+    .btn-signing{
+        padding: 0.6rem 1.5rem;
+    }
+
+    .content{
+        margin-top: 25rem;
+        max-width: 30rem;
+        margin-left: 10%;
+    }
+
+    .back-3D{
+        scale: 0.5;
+        top: -25%;
+    }
+
+    .content h1{
+        font-size: 2.5rem;
+    }
+
+    .description{
+        font-size: 1rem;
+    }
+    .btn-get-started{
+        font-size: 0.8rem;
+        padding: 0.5rem 1.2rem;
+    }
+}
