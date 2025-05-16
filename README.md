@@ -13,15 +13,15 @@ Ce projet combine ainsi l’envie d’apprendre en pratique et de proposer un ou
 ### Accès libre (sans compte)
 Lorsqu’un utilisateur arrive sur ChainTracker, il peut naviguer librement sans avoir besoin de se connecter. Il a accès à plusieurs informations clés sur les principales cryptomonnaies comme Ethereum, Binance Smart Chain (BNB), Bitcoin, Solana et Polygon, notamment :
 
-Le prix actuel
+  - Le prix actuel
 
-La capitalisation boursière (market cap)
+  - La capitalisation boursière (market cap)
 
-Le temps moyen de transaction (TPS)
+  - Le temps moyen de transaction (TPS)
 
-Le gas price (frais de transaction)
+  - Le gas price (frais de transaction)
 
-Les derniers blocs minés
+  - Les derniers blocs minés
 
 L’utilisateur peut aussi consulter la liste des dernières transactions sur les réseaux Ethereum, BNB, Bitcoin et Polygon, avec des détails comme : le hash, l’adresse émettrice (from), l’adresse destinataire (to), la valeur transférée, et les frais associés.
 
@@ -33,13 +33,13 @@ Pour accéder à la fonctionnalité portfolio, l’utilisateur doit créer un co
 
 Une fois connecté, l’utilisateur peut :
 
-Ajouter les adresses de ses portefeuilles cryptos, avec un label personnalisé.
+  - Ajouter les adresses de ses portefeuilles cryptos, avec un label personnalisé.
 
-Suivre en temps réel la balance de chaque portefeuille, ainsi que sa valeur en USD.
+  - Suivre en temps réel la balance de chaque portefeuille, ainsi que sa valeur en USD.
 
-Visualiser la valeur totale de ses portefeuilles, et la répartition de ses actifs grâce à un graphique en doughnut.
+  - Visualiser la valeur totale de ses portefeuilles, et la répartition de ses actifs grâce à un graphique en doughnut.
 
-Supprimer à tout moment l’un de ses portefeuilles depuis son espace personnel.
+  - Supprimer à tout moment l’un de ses portefeuilles depuis son espace personnel.
 
 Cette fonctionnalité offre un suivi précis et pratique, centralisant toutes ses cryptos en un seul endroit sécurisé.
 
