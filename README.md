@@ -1,4 +1,5 @@
 # ChainTracker - Plateforme de visualisation de cyptomonnaies
+![ChainTracker Demo](demo/Capture.png)
 
 ## Motivations
 
