@@ -99,8 +99,6 @@ cd ChainTracker
 
 ### 2. Créer un environnement virtuel Python
 
-C’est une bonne pratique pour isoler les dépendances du projet :
-
 ```dotenv
 python -m venv venv
 ```
