@@ -81,7 +81,7 @@ Pour récupérer les données blockchain, ChainTracker utilise l’API prédéfi
 
 Avant de commencer, assurez-vous d’avoir installé sur votre machine :
 Python 3.8+
-Téléchargez-le depuis le [[site officiel](https://python.org)](https://python.org).
+Téléchargez-le depuis le [site officiel](https://python.org).
 pip (gestionnaire de paquets Python, généralement inclus avec Python).
 Git (optionnel, mais recommandé pour cloner le dépôt)
 Téléchargez-le depuis [git-scm.com](git-scm.com).
